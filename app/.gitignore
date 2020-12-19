@@ -1,0 +1,7 @@
+.*
+!.gitignore
+*.iml
+.idea/*
+local.properties
+build/*
+app/build/*
