@@ -66,6 +66,12 @@ dependencies {
     //Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
 
+    //paging lib
+    implementation "androidx.paging:paging-runtime-ktx:2.1.2"
+
+    //
+    testImplementation "androidx.paging:paging-common-ktx:2.1.2"
+
     //Room
     api "androidx.room:room-runtime:2.2.6"
     api "androidx.room:room-ktx:2.2.6"

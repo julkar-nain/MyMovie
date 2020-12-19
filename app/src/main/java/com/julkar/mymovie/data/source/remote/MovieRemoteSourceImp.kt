@@ -16,7 +16,7 @@ class MovieRemoteSourceImp @Inject constructor(private val movieApi: MovieApi) :
 
     @Throws
     override suspend fun fetchMovieList(page: Int): List<Movie> {
-        val response = movieApi.fetchMovieList(API_KEY, PRIMARY_MOVIE_RELEASE_YEAR, DEFAULT_API_SORT, 1)
+        val response = movieApi.fetchMovieList(API_KEY, PRIMARY_MOVIE_RELEASE_YEAR, DEFAULT_API_SORT, page)
 
         return response.movieList
     }

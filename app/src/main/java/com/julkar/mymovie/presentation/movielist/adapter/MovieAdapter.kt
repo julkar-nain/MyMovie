@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.julkar.mymovie.R
 import com.julkar.mymovie.domain.Movie
+import com.julkar.mymovie.presentation.util.LastItemListener
 import com.julkar.mymovie.presentation.util.ListItemListener
 import com.julkar.mymovie.util.IMAGE_URL_POSTER
 import com.squareup.picasso.Picasso
@@ -20,16 +23,11 @@ import kotlinx.android.synthetic.main.movie_list_item.view.*
  * since 12/19/20.
  */
 class MovieAdapter<Data>(
-    private val listener: ListItemListener<Data>,
-    private var movieList: List<Movie>
+    private val itemClickListener: ListItemListener<Data>,
+    private val lastItemListener: LastItemListener
 ) :
-    RecyclerView.Adapter<MovieAdapter.ViewHolder<Data>>() {
+    ListAdapter<Movie, MovieAdapter.ViewHolder<Data>>(DIFF_CALLBACK) {
     private lateinit var context: Context
-
-    fun update(movieList: List<Movie>) {
-        this.movieList = movieList
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             ViewHolder<Data> {
@@ -39,11 +37,11 @@ class MovieAdapter<Data>(
 
         context = parent.context
 
-        return ViewHolder(listener, itemView)
+        return ViewHolder(itemClickListener, itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder<Data>, position: Int) {
-        val movie = movieList[position]
+        val movie = getItem(position)
         bindText(holder.title, movie.title)
         bindText(holder.releaseDate, "Release Date : ${movie.releaseDate}")
         bindText(holder.voteCount, "Vote Count : ${movie.voteCount}")
@@ -53,9 +51,11 @@ class MovieAdapter<Data>(
         Picasso.get()
             .load(IMAGE_URL_POSTER + movie.posterPath)
             .into(holder.image)
-    }
 
-    override fun getItemCount(): Int = movieList.size
+        if (position >= itemCount - 1) {
+            lastItemListener.lastItemClick()
+        }
+    }
 
     class ViewHolder<Data>(private val listener: ListItemListener<Data>, itemView: View) :
         RecyclerView.ViewHolder(itemView) {
@@ -77,5 +77,17 @@ class MovieAdapter<Data>(
 
     private fun bindText(textView: TextView, value: String) {
         textView.text = value
+    }
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie) =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(
+                oldItem: Movie, newItem: Movie
+            ) = oldItem == newItem
+        }
     }
 }
