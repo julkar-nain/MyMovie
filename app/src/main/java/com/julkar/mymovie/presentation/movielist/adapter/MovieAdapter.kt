@@ -78,3 +78,4 @@ class MovieAdapter<Data>(
     private fun bindText(textView: TextView, value: String) {
         textView.text = value
     }
+}

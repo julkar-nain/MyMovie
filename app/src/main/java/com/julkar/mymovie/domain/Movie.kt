@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName
  * since 12/19/20.
  */
 data class Movie(
+    val id: Long,
     val title: String,
     @SerializedName("release_date")
     val releaseDate: String,
