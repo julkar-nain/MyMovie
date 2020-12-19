@@ -8,7 +8,7 @@ import java.io.Serializable
  * since 12/19/20.
  */
 data class Movie(
-    val id: Long,
+    val id: Int,
     val title: String?,
     val name: String = "",
     @SerializedName("release_date")

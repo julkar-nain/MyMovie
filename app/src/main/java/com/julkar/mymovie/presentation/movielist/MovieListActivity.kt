@@ -104,10 +104,7 @@ class MovieListActivity : AppCompatActivity() {
                 }
 
                 is MovieListState.Failure -> {
-                    movieListLoader.visibility = View.GONE
-                    seriesListLoader.visibility = View.GONE
-                    trendingListLoader.visibility = View.GONE
-
+                    hideLoader()
                     Toast.makeText(this, getString(R.string.network_error_msg), Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -137,6 +134,12 @@ class MovieListActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
+    }
+
+    private fun hideLoader() {
+        movieListLoader.visibility = View.GONE
+        seriesListLoader.visibility = View.GONE
+        trendingListLoader.visibility = View.GONE
     }
 
     private fun startActivity(movie: Movie, type: ContentType) {

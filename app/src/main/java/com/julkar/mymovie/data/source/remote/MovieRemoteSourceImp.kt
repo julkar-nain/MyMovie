@@ -24,6 +24,6 @@ class MovieRemoteSourceImp @Inject constructor(private val movieApi: MovieApi) :
     }
 
     override suspend fun fetchMovieDetail(type: ContentType, id: Int): MovieDetail {
-        return movieApi.fetchMovieDetail("${type.url}/${id}", API_KEY)
+        return movieApi.fetchMovieDetail("${type.urlDetail}/${id}", API_KEY)
     }
 }

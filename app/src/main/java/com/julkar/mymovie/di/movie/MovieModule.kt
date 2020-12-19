@@ -7,6 +7,7 @@ import com.julkar.mymovie.data.repository.MovieRepositoryImp
 import com.julkar.mymovie.data.source.remote.MovieApi
 import com.julkar.mymovie.data.source.remote.MovieRemoteSource
 import com.julkar.mymovie.data.source.remote.MovieRemoteSourceImp
+import com.julkar.mymovie.presentation.moviedetail.MovieDetailViewModel
 import com.julkar.mymovie.presentation.movielist.MovieListViewModel
 import com.julkar.mymovie.presentation.util.ViewModelFactory
 import com.julkar.mymovie.presentation.util.ViewModelKey
@@ -47,4 +48,9 @@ abstract class MovieModule {
     @ViewModelKey(MovieListViewModel::class)
     @Binds
     abstract fun bindsMovieListViewModel(movieListViewModel: MovieListViewModel): ViewModel
+
+    @IntoMap
+    @ViewModelKey(MovieDetailViewModel::class)
+    @Binds
+    abstract fun bindsMovieDetailModel(movieDetailViewModel: MovieDetailViewModel): ViewModel
 }

@@ -1,5 +1,7 @@
 package com.julkar.mymovie.di.movie
 
+import com.julkar.mymovie.domain.MovieDetail
+import com.julkar.mymovie.presentation.moviedetail.MovieDetailActivity
 import com.julkar.mymovie.presentation.movielist.MovieListActivity
 import dagger.Subcomponent
 
@@ -12,6 +14,7 @@ import dagger.Subcomponent
 interface MovieSubComponent {
 
     fun inject(movieListActivity: MovieListActivity)
+    fun inject(movieDetailActivity: MovieDetailActivity)
 
     @Subcomponent.Factory
     interface Factory {

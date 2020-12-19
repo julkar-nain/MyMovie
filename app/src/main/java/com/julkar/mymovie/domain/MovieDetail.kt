@@ -8,7 +8,8 @@ import com.google.gson.annotations.SerializedName
  */
 data class MovieDetail(
     val id: Long,
-    val title: String,
+    val title: String?,
+    val name: String = "",
     @SerializedName("release_date")
     val releaseDate: String,
     @SerializedName("vote_count")
