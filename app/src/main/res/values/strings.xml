@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyMovie</string>
+    <string name="network_error_msg">Ops! Network Error</string>
 </resources>
