@@ -8,7 +8,7 @@ import com.julkar.mymovie.domain.Movie
  */
 class MovieRepositoryImp : MovieRepository {
 
-    override suspend fun fetchMovieList(): List<Movie> {
+    override suspend fun getMovieList(page: Int): List<Movie> {
         return listOf()
     }
 }

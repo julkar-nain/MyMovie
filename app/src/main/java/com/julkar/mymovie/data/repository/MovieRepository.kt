@@ -7,5 +7,5 @@ import com.julkar.mymovie.domain.Movie
  * since 12/19/20.
  */
 interface MovieRepository {
-    suspend fun fetchMovieList(): List<Movie>
+    suspend fun getMovieList(page: Int): List<Movie>
 }
