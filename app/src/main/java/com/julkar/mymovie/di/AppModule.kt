@@ -1,6 +1,7 @@
 package com.julkar.mymovie.di
 
 import com.julkar.mymovie.util.BASE_URL
+import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,6 +11,7 @@ import javax.inject.Singleton
  * @author Julkar Nain
  * since 12/19/20.
  */
+@Module
 class AppModule {
 
     companion object {
