@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.julkar.mymovie.MainApplication
@@ -23,6 +24,7 @@ class MovieListActivity : AppCompatActivity(), ListItemListener<Movie> {
     lateinit var modelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: MovieListViewModel
+
     private val movieAdapter by lazy {
         MovieAdapter(this, object : LastItemListener {
             override fun lastItemClick() {
@@ -31,11 +33,21 @@ class MovieListActivity : AppCompatActivity(), ListItemListener<Movie> {
             }
         })
     }
-    private val tvSeriesAdapter by lazy{
+
+    private val seriesAdapter by lazy{
         MovieAdapter(this, object : LastItemListener {
             override fun lastItemClick() {
-                tvSeriesListLoader.visibility = View.VISIBLE
+                seriesListLoader.visibility = View.VISIBLE
                 viewModel.bindMovieListData(ContentType.TV_SERIES, ++ContentType.TV_SERIES.page)
+            }
+        })
+    }
+
+    private val trendingAdapter by lazy{
+        MovieAdapter(this, object : LastItemListener {
+            override fun lastItemClick() {
+                trendingListLoader.visibility = View.VISIBLE
+                viewModel.bindMovieListData(ContentType.TRENDING, ++ContentType.TRENDING.page)
             }
         })
     }
@@ -60,10 +72,18 @@ class MovieListActivity : AppCompatActivity(), ListItemListener<Movie> {
                             )
                         )
                     } else if (movieState.type == ContentType.TV_SERIES) {
-                        tvSeriesListLoader.visibility = View.GONE
-                        tvSeriesAdapter.submitList(
+                        seriesListLoader.visibility = View.GONE
+                        seriesAdapter.submitList(
                             ListMerge(
-                                tvSeriesAdapter.currentList,
+                                seriesAdapter.currentList,
+                                movieState.movieList
+                            )
+                        )
+                    }else if (movieState.type == ContentType.TRENDING) {
+                        trendingListLoader.visibility = View.GONE
+                        trendingAdapter.submitList(
+                            ListMerge(
+                                trendingAdapter.currentList,
                                 movieState.movieList
                             )
                         )
@@ -72,24 +92,31 @@ class MovieListActivity : AppCompatActivity(), ListItemListener<Movie> {
 
                 is MovieState.Failure -> {
                     movieListLoader.visibility = View.GONE
+                    seriesListLoader.visibility = View.GONE
+                    trendingListLoader.visibility = View.GONE
+
                     Toast.makeText(this, getString(R.string.network_error_msg), Toast.LENGTH_SHORT)
                         .show()
                 }
             }
         }
 
-        configureMovieList(movieAdapter, rvMovieList)
-        configureMovieList(tvSeriesAdapter, rvSeriesList)
+        configureMovieList(movieAdapter, rvMovieList, LinearLayoutManager.HORIZONTAL)
+        configureMovieList(seriesAdapter, rvSeriesList, LinearLayoutManager.HORIZONTAL)
+        configureMovieList(trendingAdapter, rvTrendingList, LinearLayoutManager.HORIZONTAL)
 
         viewModel.bindMovieListData(ContentType.MOVIE,ContentType.MOVIE.page)
         movieListLoader.visibility = View.VISIBLE
 
         viewModel.bindMovieListData(ContentType.TV_SERIES, ContentType.TV_SERIES.page)
-        tvSeriesListLoader.visibility = View.VISIBLE
+        seriesListLoader.visibility = View.VISIBLE
+
+        viewModel.bindMovieListData(ContentType.TRENDING, ContentType.TRENDING.page)
+        trendingListLoader.visibility = View.VISIBLE
     }
 
-    private fun configureMovieList(adapter: MovieAdapter<Movie>, recyclerView: RecyclerView) {
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    private fun configureMovieList(adapter: MovieAdapter<Movie>, recyclerView: RecyclerView, orientation: Int) {
+        val layoutManager = LinearLayoutManager(this, orientation, false)
 
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
