@@ -5,6 +5,9 @@ package com.julkar.mymovie.util
  * since 12/19/20.
  */
 
+//database
+const val DATABASE_VERSION = 1
+
 //network
 const val BASE_URL = "https://api.themoviedb.org/"
 const val API_KEY = "1a97f3b8d5deee1d649c0025f3acf75c"

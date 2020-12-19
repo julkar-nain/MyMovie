@@ -1,5 +1,8 @@
 package com.julkar.mymovie.di
 
+import android.app.Application
+import androidx.room.Room
+import com.julkar.mymovie.db.AppDatabase
 import com.julkar.mymovie.util.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -22,6 +25,15 @@ class AppModule {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
+        }
+
+        @Provides
+        fun providesAppDatabase(application: Application): AppDatabase {
+            return Room.databaseBuilder<AppDatabase>(
+                application,
+                AppDatabase::class.java,
+                "app-database"
+            ).build()
         }
     }
 }

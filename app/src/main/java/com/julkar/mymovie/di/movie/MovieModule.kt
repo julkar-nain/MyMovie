@@ -4,9 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.julkar.mymovie.data.repository.MovieRepository
 import com.julkar.mymovie.data.repository.MovieRepositoryImp
+import com.julkar.mymovie.data.source.local.MovieDao
+import com.julkar.mymovie.data.source.local.MovieLocalSource
+import com.julkar.mymovie.data.source.local.MovieLocalSourceImp
 import com.julkar.mymovie.data.source.remote.MovieApi
 import com.julkar.mymovie.data.source.remote.MovieRemoteSource
 import com.julkar.mymovie.data.source.remote.MovieRemoteSourceImp
+import com.julkar.mymovie.db.AppDatabase
 import com.julkar.mymovie.presentation.moviedetail.MovieDetailViewModel
 import com.julkar.mymovie.presentation.movielist.MovieListViewModel
 import com.julkar.mymovie.presentation.util.ViewModelFactory
@@ -31,11 +35,20 @@ abstract class MovieModule {
         fun providesMovieApi(retrofit: Retrofit): MovieApi {
             return retrofit.create(MovieApi::class.java)
         }
+
+        @Provides
+        fun providesMovieDao(appDatabase: AppDatabase): MovieDao {
+            return appDatabase.movieDao()
+        }
     }
 
     @Binds
     abstract fun bindsMovieRemoteSource(movieRemoteSourceImp: MovieRemoteSourceImp):
             MovieRemoteSource
+
+    @Binds
+    abstract fun bindsMovieLocalDataSource(movieLocalSourceImp: MovieLocalSourceImp):
+            MovieLocalSource
 
     @Binds
     abstract fun bindsMovieRepository(movieRepositoryImp: MovieRepositoryImp):
