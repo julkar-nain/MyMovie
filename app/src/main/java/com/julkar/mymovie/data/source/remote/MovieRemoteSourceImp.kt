@@ -3,6 +3,7 @@ package com.julkar.mymovie.data.source.remote
 import com.julkar.mymovie.di.movie.MovieScope
 import com.julkar.mymovie.domain.ContentType
 import com.julkar.mymovie.domain.Movie
+import com.julkar.mymovie.domain.MovieDetail
 import com.julkar.mymovie.util.API_KEY
 import com.julkar.mymovie.util.DEFAULT_API_SORT
 import com.julkar.mymovie.util.PRIMARY_MOVIE_RELEASE_YEAR
@@ -20,5 +21,9 @@ class MovieRemoteSourceImp @Inject constructor(private val movieApi: MovieApi) :
         val response = movieApi.fetchMovieList(type.url, API_KEY, PRIMARY_MOVIE_RELEASE_YEAR, DEFAULT_API_SORT, page)
 
         return response.movieList
+    }
+
+    override suspend fun fetchMovieDetail(type: ContentType, id: Int): MovieDetail {
+        return movieApi.fetchMovieDetail("${type.url}/${id}", API_KEY)
     }
 }

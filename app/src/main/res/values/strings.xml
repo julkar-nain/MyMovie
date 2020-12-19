@@ -5,4 +5,5 @@
     <string name="movie">Movie</string>
     <string name="series">Tv Series</string>
     <string name="trending">Trending</string>
+    <string name="image">Image</string>
 </resources>

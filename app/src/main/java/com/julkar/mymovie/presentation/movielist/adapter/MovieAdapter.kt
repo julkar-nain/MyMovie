@@ -23,10 +23,12 @@ import kotlinx.android.synthetic.main.movie_list_item.view.*
  * since 12/19/20.
  */
 class MovieAdapter<Data>(
-    private val itemClickListener: ListItemListener<Data>,
+    private val itemClickListener: ListItemListener<Data>?,
     private val lastItemListener: LastItemListener
-) :
-    ListAdapter<Movie, MovieAdapter.ViewHolder<Data>>(DIFF_CALLBACK) {
+) : ListAdapter<Movie, MovieAdapter.ViewHolder<Data>>(DIFF_CALLBACK) {
+
+    constructor(itemClickListener: LastItemListener) : this(null, itemClickListener)
+
     private lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
@@ -42,7 +44,7 @@ class MovieAdapter<Data>(
 
     override fun onBindViewHolder(holder: ViewHolder<Data>, position: Int) {
         val movie = getItem(position)
-        bindText(holder.title, movie.title)
+        bindText(holder.title, movie.title ?: movie.name)
         bindText(holder.releaseDate, "Release Date : ${movie.releaseDate}")
         bindText(holder.voteCount, "Vote Count : ${movie.voteCount}")
         holder.container.setTag(R.id.item_position, position)
@@ -57,7 +59,7 @@ class MovieAdapter<Data>(
         }
     }
 
-    class ViewHolder<Data>(private val listener: ListItemListener<Data>, itemView: View) :
+    class ViewHolder<Data>(private val listener: ListItemListener<Data>?, itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.title
         val releaseDate: TextView = itemView.releaseDate
@@ -70,7 +72,7 @@ class MovieAdapter<Data>(
             container.setOnClickListener { view ->
                 val position = view.getTag(R.id.item_position) as Int
                 val id = view.getTag(R.id.item_data) as Data
-                listener.onClick(view, position, id)
+                listener?.onClick(view, position, id)
             }
         }
     }

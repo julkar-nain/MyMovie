@@ -17,16 +17,16 @@ import javax.inject.Inject
 class MovieListViewModel @Inject constructor(private val movieRepository: MovieRepository) :
     ViewModel() {
 
-    private val _movieState = MutableLiveData<MovieState>()
+    private val _movieState = MutableLiveData<MovieListState>()
 
-    val movieState: LiveData<MovieState> get() = _movieState
+    val movieListState: LiveData<MovieListState> get() = _movieState
 
     fun bindMovieListData(type: ContentType, page: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _movieState.postValue(MovieState.Success(type, movieRepository.getMovieList(type, page)))
+                _movieState.postValue(MovieListState.Success(type, movieRepository.getMovieList(type, page)))
             } catch (e: Throwable) {
-                _movieState.postValue(MovieState.Failure(e))
+                _movieState.postValue(MovieListState.Failure(e))
             }
         }
     }

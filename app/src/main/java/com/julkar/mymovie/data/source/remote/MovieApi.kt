@@ -1,6 +1,7 @@
 package com.julkar.mymovie.data.source.remote
 
 import com.julkar.mymovie.data.source.remote.response.MovieListResponse
+import com.julkar.mymovie.domain.MovieDetail
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -19,4 +20,10 @@ interface MovieApi {
         @Query("sort_by") sortBy: String,
         @Query("page") page: Int
     ): MovieListResponse
+
+    @GET
+    suspend fun fetchMovieDetail(
+        @Url url: String,
+        @Query("api_key") apiKey: String,
+    ): MovieDetail
 }
