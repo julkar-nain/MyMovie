@@ -1,5 +1,6 @@
 package com.julkar.mymovie.data.repository
 
+import com.julkar.mymovie.domain.ContentType
 import com.julkar.mymovie.domain.Movie
 
 /**
@@ -7,5 +8,5 @@ import com.julkar.mymovie.domain.Movie
  * since 12/19/20.
  */
 interface MovieRepository {
-    suspend fun getMovieList(page: Int): List<Movie>
+    suspend fun getMovieList(type: ContentType, page: Int): List<Movie>
 }

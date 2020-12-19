@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.julkar.mymovie.data.repository.MovieRepository
+import com.julkar.mymovie.domain.ContentType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,10 +21,10 @@ class MovieListViewModel @Inject constructor(private val movieRepository: MovieR
 
     val movieState: LiveData<MovieState> get() = _movieState
 
-    fun bindMovieListData(page: Int) {
+    fun bindMovieListData(type: ContentType, page: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _movieState.postValue(MovieState.Success(movieRepository.getMovieList(page)))
+                _movieState.postValue(MovieState.Success(type, movieRepository.getMovieList(type, page)))
             } catch (e: Throwable) {
                 _movieState.postValue(MovieState.Failure(e))
             }

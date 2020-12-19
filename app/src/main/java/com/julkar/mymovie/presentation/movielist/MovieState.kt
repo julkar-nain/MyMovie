@@ -1,5 +1,6 @@
 package com.julkar.mymovie.presentation.movielist
 
+import com.julkar.mymovie.domain.ContentType
 import com.julkar.mymovie.domain.Movie
 
 /**
@@ -7,6 +8,6 @@ import com.julkar.mymovie.domain.Movie
  * since 12/19/20.
  */
 sealed class MovieState {
-    data class Success(var movieList: List<Movie>) : MovieState()
+    data class Success(var type: ContentType, var movieList: List<Movie>) : MovieState()
     data class Failure(var exception: Throwable) : MovieState()
 }

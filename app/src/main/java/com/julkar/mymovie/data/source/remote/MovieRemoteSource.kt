@@ -1,5 +1,6 @@
 package com.julkar.mymovie.data.source.remote
 
+import com.julkar.mymovie.domain.ContentType
 import com.julkar.mymovie.domain.Movie
 
 /**
@@ -8,5 +9,5 @@ import com.julkar.mymovie.domain.Movie
  */
 interface MovieRemoteSource {
 
-    suspend fun fetchMovieList(page: Int): List<Movie>
+    suspend fun fetchMovieList(type: ContentType, page: Int): List<Movie>
 }
