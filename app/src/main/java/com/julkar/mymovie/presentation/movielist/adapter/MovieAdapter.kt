@@ -43,7 +43,7 @@ class MovieAdapter<Data>(
 
     override fun onBindViewHolder(holder: ViewHolder<Data>, position: Int) {
         val movie = getItem(position)
-        bindText(holder.title, movie.title ?: movie.name)
+        bindText(holder.title, movie.title ?: movie.name?: "")
         bindText(holder.releaseDate, "Release Date : ${movie.releaseDate}")
         bindText(holder.voteCount, "Vote Count : ${movie.voteCount}")
         holder.container.setTag(R.id.item_position, position)

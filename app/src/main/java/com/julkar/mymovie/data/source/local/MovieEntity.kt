@@ -9,8 +9,13 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "movie_table")
 data class MovieEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
-    val movieId: Int,
-    val wishList: Boolean = false
+    @PrimaryKey(autoGenerate = false)
+    val id: Int,
+    val title: String?,
+    val name: String? = "",
+    val releaseDate: String?,
+    val voteCount: Int?,
+    val posterPath: String?,
+    val page: Int,
+    val type: Int
 )

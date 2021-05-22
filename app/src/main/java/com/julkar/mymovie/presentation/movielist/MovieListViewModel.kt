@@ -8,6 +8,7 @@ import com.julkar.mymovie.data.repository.MovieRepository
 import com.julkar.mymovie.domain.ContentType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -22,9 +23,17 @@ class MovieListViewModel @Inject constructor(private val movieRepository: MovieR
     val movieListState: LiveData<MovieListState> get() = _movieState
 
     fun bindMovieListData(type: ContentType, page: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             try {
-                _movieState.postValue(MovieListState.Success(type, movieRepository.getMovieList(type, page)))
+                val list = withContext(Dispatchers.IO) {
+                    movieRepository.getMovieList(type, page)
+                }.sortedBy { it.releaseDate }
+                _movieState.value =
+                    MovieListState.Success(
+                        type,
+                        list
+                    )
+
             } catch (e: Throwable) {
                 _movieState.postValue(MovieListState.Failure(e))
             }

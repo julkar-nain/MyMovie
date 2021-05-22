@@ -1,5 +1,6 @@
 package com.julkar.mymovie.data.source.local
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.room.*
 
 /**
@@ -8,11 +9,16 @@ import androidx.room.*
  */
 @Dao
 interface MovieDao {
-    @Insert
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(movieEntity: MovieEntity)
 
-    @Query("SELECT * from movie_table")
-    suspend fun getMovies(): List<MovieEntity>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Throws(SQLiteConstraintException::class)
+    suspend fun insertAll(vararg movieList: MovieEntity)
+
+    @Query("SELECT * from movie_table where page is :page and type is :type")
+    suspend fun getMovies(page: Int, type: Int): List<MovieEntity>
 
     @Query("SELECT * FROM movie_table WHERE id = :id")
     suspend fun getMovieById(id: Int): MovieEntity

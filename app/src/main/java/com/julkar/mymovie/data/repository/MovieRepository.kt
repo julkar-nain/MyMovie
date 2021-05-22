@@ -12,7 +12,4 @@ import com.julkar.mymovie.domain.MovieDetail
 interface MovieRepository {
     suspend fun getMovieList(type: ContentType, page: Int): List<Movie>
     suspend fun getMovieDetail(type: ContentType, id: Int): MovieDetail
-    suspend fun getMovieById(id: Int): MovieEntity
-    suspend fun saveMovieDetail(movieEntity: MovieEntity)
-    suspend fun updateMovieDetail(movieEntity: MovieEntity)
 }

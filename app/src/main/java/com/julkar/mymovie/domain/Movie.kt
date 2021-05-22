@@ -10,11 +10,11 @@ import java.io.Serializable
 data class Movie(
     val id: Int,
     val title: String?,
-    val name: String = "",
+    val name: String? = "",
     @SerializedName("release_date")
-    val releaseDate: String,
+    val releaseDate: String?,
     @SerializedName("vote_count")
-    val voteCount: Int,
+    val voteCount: Int?,
     @SerializedName("poster_path")
-    val posterPath: String
+    val posterPath: String?
 ): Serializable

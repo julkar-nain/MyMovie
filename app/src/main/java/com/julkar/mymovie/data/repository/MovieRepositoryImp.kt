@@ -1,6 +1,5 @@
 package com.julkar.mymovie.data.repository
 
-import com.julkar.mymovie.data.source.local.MovieEntity
 import com.julkar.mymovie.data.source.local.MovieLocalSource
 import com.julkar.mymovie.data.source.remote.MovieRemoteSource
 import com.julkar.mymovie.domain.ContentType
@@ -19,22 +18,23 @@ class MovieRepositoryImp @Inject constructor(
     MovieRepository {
 
     override suspend fun getMovieList(type: ContentType, page: Int): List<Movie> {
-        return movieRemoteSource.fetchMovieList(type, page)
+        return try {
+            val movies = movieRemoteSource.fetchMovieList(type, page)
+
+            if (movies.isNullOrEmpty()) {
+                movieLocalSource.getAllMovies(page, type.tag)
+            } else {
+                movieLocalSource.saveAllMovies(movies, page, type.tag)
+
+                movies
+            }
+        } catch (ex: Exception) {
+            movieLocalSource.getAllMovies(page, type.tag)
+
+        }
     }
 
     override suspend fun getMovieDetail(type: ContentType, id: Int): MovieDetail {
         return movieRemoteSource.fetchMovieDetail(type, id)
-    }
-
-    override suspend fun getMovieById(id: Int): MovieEntity {
-        return movieLocalSource.getMovieById(id)
-    }
-
-    override suspend fun saveMovieDetail(movieEntity: MovieEntity) {
-        movieLocalSource.saveMovie(movieEntity)
-    }
-
-    override suspend fun updateMovieDetail(movieEntity: MovieEntity) {
-        movieLocalSource.updateMovie(movieEntity)
     }
 }
