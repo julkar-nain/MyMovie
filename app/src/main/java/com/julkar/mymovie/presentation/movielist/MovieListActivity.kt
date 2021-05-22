@@ -2,12 +2,11 @@ package com.julkar.mymovie.presentation.movielist
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.julkar.mymovie.R
@@ -26,10 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MovieListActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var modelFactory: ViewModelProvider.Factory
-
-    private lateinit var viewModel: MovieListViewModel
+    private val viewModel: MovieListViewModel by viewModels()
 
     private val movieAdapter by lazy {
         MovieAdapter(object : ListItemListener<Movie> {
@@ -77,9 +73,6 @@ class MovieListActivity : AppCompatActivity() {
             this,
             R.layout.activity_movie_list
         )
-
-
-        viewModel = ViewModelProvider(this, modelFactory).get(MovieListViewModel::class.java)
 
         viewModel.movieListState.observe(this) { movieState ->
             when (movieState) {

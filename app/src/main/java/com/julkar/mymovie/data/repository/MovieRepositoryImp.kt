@@ -6,11 +6,13 @@ import com.julkar.mymovie.domain.ContentType
 import com.julkar.mymovie.domain.Movie
 import com.julkar.mymovie.domain.MovieDetail
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * @author Julkar Nain
  * since 12/19/20.
  */
+@Singleton
 class MovieRepositoryImp @Inject constructor(
     private val movieRemoteSource: MovieRemoteSource,
     private val movieLocalSource: MovieLocalSource
@@ -30,7 +32,6 @@ class MovieRepositoryImp @Inject constructor(
             }
         } catch (ex: Exception) {
             movieLocalSource.getAllMovies(page, type.tag)
-
         }
     }
 

@@ -6,9 +6,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import com.julkar.mymovie.R
 import com.julkar.mymovie.databinding.ActivityMovieDetailBinding
 import com.julkar.mymovie.domain.ContentType
@@ -19,15 +19,11 @@ import com.julkar.mymovie.util.EXTRA_MOVIE
 import com.julkar.mymovie.util.IMAGE_URL_BACKDROP
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieDetailActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var modelFactory: ViewModelProvider.Factory
-
-    private lateinit var viewModel: MovieDetailViewModel
+    private val viewModel: MovieDetailViewModel by viewModels()
 
     private var wishList: Boolean = false
 
@@ -36,8 +32,6 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
-
-        viewModel = ViewModelProvider(this, modelFactory).get(MovieDetailViewModel::class.java)
 
         val movie = intent.getSerializableExtra(EXTRA_MOVIE) as Movie
         val type = intent.getSerializableExtra(EXTRA_CONTENT_TYPE) as ContentType

@@ -2,11 +2,13 @@ package com.julkar.mymovie.data.source.local
 
 import com.julkar.mymovie.domain.Movie
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * @author Julkar Nain
  * since 12/19/20.
  */
+@Singleton
 class MovieLocalSourceImp @Inject constructor(private val movieDao: MovieDao) : MovieLocalSource {
 
     override suspend fun saveAllMovies(list: List<Movie>, page: Int, type: Int) {

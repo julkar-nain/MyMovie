@@ -7,11 +7,13 @@ import com.julkar.mymovie.util.API_KEY
 import com.julkar.mymovie.util.DEFAULT_API_SORT
 import com.julkar.mymovie.util.PRIMARY_MOVIE_RELEASE_YEAR
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * @author Julkar Nain
  * since 12/19/20.
  */
+@Singleton
 class MovieRemoteSourceImp @Inject constructor(private val movieApi: MovieApi) : MovieRemoteSource {
 
     @Throws

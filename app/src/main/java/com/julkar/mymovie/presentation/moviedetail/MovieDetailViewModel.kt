@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 import com.julkar.mymovie.data.repository.MovieRepository
 import com.julkar.mymovie.data.source.local.MovieLocalSource
 import com.julkar.mymovie.domain.ContentType
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,6 +17,7 @@ import javax.inject.Inject
  * @author Julkar Nain
  * since 12/19/20.
  */
+@HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     private val movieRepository: MovieRepository
 ) :
