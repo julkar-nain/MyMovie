@@ -1,4 +1,4 @@
-package com.julkar.mymovie.di.movie
+package com.julkar.mymovie.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +18,8 @@ import com.julkar.mymovie.presentation.util.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.multibindings.IntoMap
 import retrofit2.Retrofit
 
@@ -25,12 +27,12 @@ import retrofit2.Retrofit
  * @author Julkar Nain
  * since 12/19/20.
  */
+@InstallIn(ActivityComponent::class)
 @Module
 abstract class MovieModule {
 
     companion object {
 
-        @MovieScope
         @Provides
         fun providesMovieApi(retrofit: Retrofit): MovieApi {
             return retrofit.create(MovieApi::class.java)

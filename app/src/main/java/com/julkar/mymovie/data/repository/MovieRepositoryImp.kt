@@ -3,7 +3,6 @@ package com.julkar.mymovie.data.repository
 import com.julkar.mymovie.data.source.local.MovieEntity
 import com.julkar.mymovie.data.source.local.MovieLocalSource
 import com.julkar.mymovie.data.source.remote.MovieRemoteSource
-import com.julkar.mymovie.di.movie.MovieScope
 import com.julkar.mymovie.domain.ContentType
 import com.julkar.mymovie.domain.Movie
 import com.julkar.mymovie.domain.MovieDetail

@@ -16,7 +16,6 @@ import com.julkar.mymovie.presentation.util.LastItemListener
 import com.julkar.mymovie.presentation.util.ListItemListener
 import com.julkar.mymovie.util.IMAGE_URL_POSTER
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.movie_list_item.view.*
 
 /**
  * @author Julkar Nain
@@ -61,11 +60,11 @@ class MovieAdapter<Data>(
 
     class ViewHolder<Data>(private val listener: ListItemListener<Data>?, itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.title
-        val releaseDate: TextView = itemView.releaseDate
-        val voteCount: TextView = itemView.voteCount
-        val image: ImageView = itemView.image
-        val container: LinearLayout = itemView.container
+        val title: TextView = itemView.findViewById(R.id.title)
+        val releaseDate: TextView = itemView.findViewById(R.id.releaseDate)
+        val voteCount: TextView = itemView.findViewById(R.id.voteCount)
+        val image: ImageView = itemView.findViewById(R.id.image)
+        val container: LinearLayout = itemView.findViewById(R.id.container)
 
         init {
 

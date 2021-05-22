@@ -7,9 +7,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.julkar.mymovie.MainApplication
 import com.julkar.mymovie.R
+import com.julkar.mymovie.databinding.ActivityMovieDetailBinding
 import com.julkar.mymovie.domain.ContentType
 import com.julkar.mymovie.domain.Movie
 import com.julkar.mymovie.domain.MovieDetail
@@ -17,11 +18,12 @@ import com.julkar.mymovie.util.EXTRA_CONTENT_TYPE
 import com.julkar.mymovie.util.EXTRA_MOVIE
 import com.julkar.mymovie.util.IMAGE_URL_BACKDROP
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_movie_detail.*
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class MovieDetailActivity : AppCompatActivity() {
+
     @Inject
     lateinit var modelFactory: ViewModelProvider.Factory
 
@@ -29,11 +31,11 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private var wishList: Boolean = false
 
+    private lateinit var viewBinding: ActivityMovieDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_detail)
-
-        (application as MainApplication).appComponent.getMovieSubComponent().create().inject(this)
+        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
 
         viewModel = ViewModelProvider(this, modelFactory).get(MovieDetailViewModel::class.java)
 
@@ -41,7 +43,7 @@ class MovieDetailActivity : AppCompatActivity() {
         val type = intent.getSerializableExtra(EXTRA_CONTENT_TYPE) as ContentType
 
         viewModel.movieDetailState.observe(this) { state ->
-            progressBar.visibility = View.GONE
+            viewBinding.progressBar.visibility = View.GONE
 
             when (state) {
                 is MovieDetailState.Success -> {
@@ -56,7 +58,7 @@ class MovieDetailActivity : AppCompatActivity() {
         }
 
         viewModel.bindMovieDetailData(type, movie.id)
-        progressBar.visibility = View.VISIBLE
+        viewBinding.progressBar.visibility = View.VISIBLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -71,7 +73,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
         if (wishList) {
             item.title = getString(R.string.remove_from_wish_list)
-        }else {
+        } else {
             item.title = getString(R.string.add_to_wish_list)
         }
 
@@ -83,7 +85,7 @@ class MovieDetailActivity : AppCompatActivity() {
             R.id.wish_list -> {
                 if (wishList) {
                     //remove from wish list
-                }else {
+                } else {
                     //add to wish list
                 }
 
@@ -94,11 +96,11 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun bindMovieDetail(movieDetail: MovieDetail) {
-        tvTitle.text = movieDetail.title ?: movieDetail.name
-        tvOverview.text = movieDetail.overview
+        viewBinding.tvTitle.text = movieDetail.title ?: movieDetail.name
+        viewBinding.tvOverview.text = movieDetail.overview
 
         Picasso.get()
             .load(IMAGE_URL_BACKDROP + movieDetail.posterPath)
-            .into(image)
+            .into(viewBinding.image)
     }
 }

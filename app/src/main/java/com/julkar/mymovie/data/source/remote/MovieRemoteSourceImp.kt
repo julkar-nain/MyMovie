@@ -1,6 +1,5 @@
 package com.julkar.mymovie.data.source.remote
 
-import com.julkar.mymovie.di.movie.MovieScope
 import com.julkar.mymovie.domain.ContentType
 import com.julkar.mymovie.domain.Movie
 import com.julkar.mymovie.domain.MovieDetail
@@ -13,7 +12,6 @@ import javax.inject.Inject
  * @author Julkar Nain
  * since 12/19/20.
  */
-@MovieScope
 class MovieRemoteSourceImp @Inject constructor(private val movieApi: MovieApi) : MovieRemoteSource {
 
     @Throws
