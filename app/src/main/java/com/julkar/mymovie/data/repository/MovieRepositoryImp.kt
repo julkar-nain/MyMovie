@@ -36,6 +36,19 @@ class MovieRepositoryImp @Inject constructor(
     }
 
     override suspend fun getMovieDetail(type: ContentType, id: Int): MovieDetail {
-        return movieRemoteSource.fetchMovieDetail(type, id)
+        return try {
+            val movie = movieRemoteSource.fetchMovieDetail(type, id)
+
+           movie?.let {
+                movieLocalSource.updateMovie(it)
+
+               it
+           }?: movieLocalSource.getMovieById(id)
+
+        }catch (ex: Exception) {
+            val test = ex
+            test.printStackTrace()
+            movieLocalSource.getMovieById(id)
+        }
     }
 }

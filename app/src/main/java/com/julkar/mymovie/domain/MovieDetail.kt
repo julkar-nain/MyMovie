@@ -11,20 +11,20 @@ data class MovieDetail(
     val title: String?,
     val name: String = "",
     @SerializedName("release_date")
-    val releaseDate: String,
+    val releaseDate: String = "",
     @SerializedName("vote_count")
-    val voteCount: Int,
+    val voteCount: Int = 0,
     @SerializedName("poster_path")
-    val posterPath: String,
-    val overview: String,
-    val homepage: String,
-    val popularity: Double,
-    val revenue: Long,
-    val runtime: Int,
-    val status: String,
-    val tagline: String,
-    val adult: Boolean,
-    val video: Boolean,
+    val posterPath: String? = "",
+    val overview: String? = "",
+    val homepage: String? = "",
+    val popularity: Double? = 0.0,
+    val revenue: Long? = 0,
+    val runtime: Int? = 0,
+    val status: String? = "",
+    val tagline: String? = "",
+    val adult: Boolean? = false,
+    val video: Boolean? = false,
     @SerializedName("imdb_id")
-    val imdbId: String
+    val imdbId: String? = ""
 )

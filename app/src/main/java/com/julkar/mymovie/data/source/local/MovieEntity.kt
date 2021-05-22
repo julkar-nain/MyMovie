@@ -2,6 +2,7 @@ package com.julkar.mymovie.data.source.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 /**
  * @author Julkar Nain
@@ -17,5 +18,15 @@ data class MovieEntity(
     val voteCount: Int?,
     val posterPath: String?,
     val page: Int,
-    val type: Int
+    val type: Int,
+    val overview: String? = "",
+    val homepage: String? = "",
+    val popularity: Double? = 0.0,
+    val revenue: Long? = 0,
+    val runtime: Int? = 0,
+    val status: String? = "",
+    val tagline: String? = "",
+    val adult: Boolean? = false,
+    val video: Boolean? = false,
+    val imdbId: String? = ""
 )

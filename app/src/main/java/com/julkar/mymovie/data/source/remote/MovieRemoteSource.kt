@@ -10,6 +10,6 @@ import com.julkar.mymovie.domain.MovieDetail
  */
 interface MovieRemoteSource {
 
-    suspend fun fetchMovieList(type: ContentType, page: Int): List<Movie>
-    suspend fun fetchMovieDetail(type: ContentType, id: Int): MovieDetail
+    suspend fun fetchMovieList(type: ContentType, page: Int): List<Movie>?
+    suspend fun fetchMovieDetail(type: ContentType, id: Int): MovieDetail?
 }

@@ -17,13 +17,13 @@ import javax.inject.Singleton
 class MovieRemoteSourceImp @Inject constructor(private val movieApi: MovieApi) : MovieRemoteSource {
 
     @Throws
-    override suspend fun fetchMovieList(type: ContentType, page: Int): List<Movie> {
+    override suspend fun fetchMovieList(type: ContentType, page: Int): List<Movie>? {
         val response = movieApi.fetchMovieList(type.url, API_KEY, PRIMARY_MOVIE_RELEASE_YEAR, DEFAULT_API_SORT, page)
 
         return response.movieList
     }
 
-    override suspend fun fetchMovieDetail(type: ContentType, id: Int): MovieDetail {
+    override suspend fun fetchMovieDetail(type: ContentType, id: Int): MovieDetail? {
         return movieApi.fetchMovieDetail("${type.urlDetail}/${id}", API_KEY)
     }
 }

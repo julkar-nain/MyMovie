@@ -25,5 +25,5 @@ interface MovieApi {
     suspend fun fetchMovieDetail(
         @Url url: String,
         @Query("api_key") apiKey: String,
-    ): MovieDetail
+    ): MovieDetail?
 }
